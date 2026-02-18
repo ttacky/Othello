@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オセロ (Othello)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>オセロ</h1>
+
+        <div class="game-info">
+            <div class="player-info player-black" id="player-black">
+                <div class="disc disc-black"></div>
+                <span>黒</span>
+                <span class="score" id="score-black">2</span>
+            </div>
+            <div class="turn-indicator" id="turn-indicator">黒の番</div>
+            <div class="player-info player-white" id="player-white">
+                <div class="disc disc-white"></div>
+                <span>白</span>
+                <span class="score" id="score-white">2</span>
+            </div>
+        </div>
+
+        <div class="board" id="board"></div>
+
+        <div class="message" id="message"></div>
+
+        <div class="controls">
+            <div class="mode-select">
+                <label for="game-mode">モード:</label>
+                <select id="game-mode">
+                    <option value="pvp">対人戦</option>
+                    <option value="pvc" selected>CPU対戦</option>
+                </select>
+            </div>
+            <div class="difficulty-select" id="difficulty-container">
+                <label for="difficulty">CPU強さ:</label>
+                <select id="difficulty">
+                    <option value="easy">弱い</option>
+                    <option value="medium" selected>普通</option>
+                    <option value="hard">強い</option>
+                </select>
+            </div>
+            <button id="restart-btn">リスタート</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
