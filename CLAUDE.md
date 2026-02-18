@@ -1,110 +1,110 @@
-# CLAUDE.md — AI Assistant Guide for Othello
+# CLAUDE.md — AIアシスタント向けガイド（Othello）
 
-This file provides guidance for AI assistants (Claude Code and similar tools) working on this repository.
+このファイルは、AIアシスタント（Claude Codeなど）がこのリポジトリで作業する際のガイドラインを提供します。
 
-## Project Overview
+## プロジェクト概要
 
-**Othello** is a web-based implementation of the classic Othello (Reversi) board game, playable directly in a web browser. The project is built using standard web technologies (HTML, CSS, JavaScript) with no server-side component.
+**Othello** は、クラシックなオセロ（リバーシ）ボードゲームのWebベース実装です。Webブラウザ上で直接プレイできます。標準的なWeb技術（HTML、CSS、JavaScript）のみで構築され、サーバーサイドのコンポーネントはありません。
 
-- **License:** Apache 2.0
-- **Target platform:** Modern web browsers (desktop and mobile)
+- **ライセンス:** Apache 2.0
+- **対象プラットフォーム:** モダンなWebブラウザ（デスクトップおよびモバイル）
 
-## Repository Structure
+## リポジトリ構成
 
-The repository is in early development. The intended layout once implemented:
+リポジトリは開発初期段階です。実装後の想定レイアウト：
 
 ```
 Othello/
-├── CLAUDE.md           # This file
-├── README.md           # Project overview
-├── LICENSE             # Apache 2.0 license
-├── index.html          # Main entry point / game UI
+├── CLAUDE.md           # このファイル
+├── README.md           # プロジェクト概要
+├── LICENSE             # Apache 2.0 ライセンス
+├── index.html          # メインエントリポイント / ゲームUI
 ├── css/
-│   └── style.css       # Game styles and board layout
+│   └── style.css       # ゲームのスタイルとボードレイアウト
 ├── js/
-│   ├── game.js         # Core game logic (rules, board state)
-│   ├── ai.js           # AI opponent logic (if applicable)
-│   └── ui.js           # DOM manipulation and event handling
+│   ├── game.js         # コアゲームロジック（ルール、盤面状態）
+│   ├── ai.js           # AI対戦ロジック（該当する場合）
+│   └── ui.js           # DOM操作とイベントハンドリング
 └── tests/
-    └── game.test.js    # Unit tests for game logic
+    └── game.test.js    # ゲームロジックのユニットテスト
 ```
 
-## Game Rules Summary
+## ゲームルールの概要
 
-Othello is played on an 8×8 grid. Two players take turns placing discs (black and white). A move is valid only if it flanks one or more of the opponent's discs in a straight line (horizontal, vertical, or diagonal). Flanked discs are flipped to the current player's color. The player with the most discs when the board is full (or no valid moves remain) wins.
+オセロは8×8のグリッド上でプレイします。2人のプレイヤーが交互にディスク（黒と白）を配置します。有効な手は、相手のディスクを直線（水平、垂直、または斜め）で1つ以上挟む場合のみです。挟まれたディスクは現在のプレイヤーの色にひっくり返されます。ボードが埋まるか、どちらのプレイヤーも有効な手がなくなった時点で、ディスクの多いプレイヤーが勝ちます。
 
-Key rules to implement correctly:
-- A move must flip at least one opponent disc to be valid
-- If a player has no valid moves, their turn is skipped
-- If neither player has valid moves, the game ends
-- The starting position places two black and two white discs in the center in a diagonal pattern
+正確に実装すべき重要なルール：
+- 手を打つには、相手のディスクを少なくとも1つひっくり返せなければならない
+- プレイヤーに有効な手がない場合、そのプレイヤーのターンはスキップされる
+- どちらのプレイヤーにも有効な手がない場合、ゲームは終了する
+- 初期配置では、中央に黒2つと白2つのディスクを対角線状に配置する
 
-## Development Workflow
+## 開発ワークフロー
 
-### Running Locally
+### ローカル実行
 
-Since this is a pure frontend project, open `index.html` directly in a browser:
+純粋なフロントエンドプロジェクトのため、`index.html`をブラウザで直接開きます：
 
 ```bash
-# Option 1: open in default browser
+# 方法1: デフォルトブラウザで開く
 open index.html          # macOS
 xdg-open index.html      # Linux
 
-# Option 2: use a simple HTTP server to avoid any CORS issues
+# 方法2: CORSの問題を回避するためにシンプルなHTTPサーバーを使用
 python3 -m http.server 8080
-# then visit http://localhost:8080
+# その後 http://localhost:8080 にアクセス
 ```
 
-### Testing
+### テスト
 
-Unit tests for game logic should use a lightweight framework compatible with browser and Node.js environments (e.g., Jest or plain QUnit).
+ゲームロジックのユニットテストは、ブラウザとNode.js環境の両方に対応する軽量フレームワーク（Jest や QUnit など）を使用します。
 
 ```bash
-# If using Jest (once configured)
+# Jest を使用する場合（設定完了後）
 npm test
 
-# Run a single test file
+# 単一のテストファイルを実行
 npx jest tests/game.test.js
 ```
 
-### Linting and Formatting
+### リンティングとフォーマット
 
-Use ESLint for JavaScript and Prettier for formatting (once configured):
+JavaScriptには ESLint、フォーマットには Prettier を使用します（設定完了後）：
 
 ```bash
 npx eslint js/
 npx prettier --write js/ css/
 ```
 
-## Code Conventions
+## コーディング規約
 
 ### JavaScript
 
-- Use **ES6+** syntax (const/let, arrow functions, template literals, classes, modules)
-- Prefer `const` over `let`; avoid `var`
-- Use **JSDoc** comments for all public functions
-- Board state is represented as a **1D array of length 64** or a **2D 8×8 array** — pick one and be consistent throughout
-- Cell values: `0` = empty, `1` = black, `2` = white (or use named constants)
-- Keep game logic (rules, state) strictly separate from UI/DOM code
+- **ES6+** 構文を使用する（const/let、アロー関数、テンプレートリテラル、クラス、モジュール）
+- `let` よりも `const` を優先し、`var` は使用しない
+- すべての公開関数に **JSDoc** コメントを記述する
+- 盤面の状態は **長さ64の1次元配列** または **8×8の2次元配列** で表現する — どちらかを選択し、一貫して使用すること
+- セルの値: `0` = 空、`1` = 黒、`2` = 白（または名前付き定数を使用）
+- ゲームロジック（ルール、状態）をUI/DOMコードから厳密に分離する
 
 ### HTML/CSS
 
-- Semantic HTML5 elements
-- Mobile-responsive layout using CSS Grid or Flexbox
-- CSS custom properties (variables) for colors and sizing
-- Avoid inline styles; keep all styling in `css/style.css`
+- セマンティックなHTML5要素を使用する
+- CSS Grid または Flexbox を使用したモバイルレスポンシブレイアウト
+- 色やサイズにはCSSカスタムプロパティ（変数）を使用する
+- インラインスタイルを避け、すべてのスタイルを `css/style.css` にまとめる
 
-### File Organization
+### ファイル構成
 
-- `game.js` must have **no DOM dependencies** — pure logic only — so it can be unit tested in Node.js
-- `ui.js` imports from `game.js` and handles all browser interactions
-- Use ES module syntax (`import`/`export`) if bundling, otherwise keep files self-contained with a clear dependency order in `index.html`
+- `game.js` は **DOM依存なし** — 純粋なロジックのみ — Node.jsでユニットテスト可能にする
+- `ui.js` は `game.js` からインポートし、すべてのブラウザ操作を担当する
+- バンドルする場合はESモジュール構文（`import`/`export`）を使用し、そうでなければ `index.html` 内で依存関係の順序を明確にして各ファイルを自己完結させる
 
-## Key Implementation Notes
+## 実装上の重要事項
 
-### Board Representation
+### 盤面の表現
 
-A recommended approach:
+推奨アプローチ：
 
 ```javascript
 const EMPTY = 0;
@@ -112,7 +112,7 @@ const BLACK = 1;
 const WHITE = 2;
 const BOARD_SIZE = 8;
 
-// Initial board state
+// 盤面の初期状態
 function createInitialBoard() {
   const board = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(EMPTY));
   board[3][3] = WHITE;
@@ -123,52 +123,52 @@ function createInitialBoard() {
 }
 ```
 
-### Move Validation
+### 手の妥当性チェック
 
-The `isValidMove(board, row, col, player)` function is critical. It must check all 8 directions from the target cell and confirm at least one opponent disc is flanked.
+`isValidMove(board, row, col, player)` 関数は非常に重要です。対象セルから8方向すべてをチェックし、相手のディスクが少なくとも1つ挟まれていることを確認する必要があります。
 
-### State Management
+### 状態管理
 
-Keep all mutable game state in a single object to make it easy to copy for AI look-ahead or undo functionality:
+すべてのミュータブルなゲーム状態を単一のオブジェクトにまとめることで、AIの先読みやアンドゥ機能のためのコピーが容易になります：
 
 ```javascript
 const gameState = {
-  board,          // 2D array
-  currentPlayer,  // BLACK or WHITE
+  board,          // 2次元配列
+  currentPlayer,  // BLACK または WHITE
   scores,         // { [BLACK]: number, [WHITE]: number }
   gameOver,       // boolean
-  winner,         // BLACK | WHITE | null (null = draw)
+  winner,         // BLACK | WHITE | null（null = 引き分け）
 };
 ```
 
-## AI Assistant Instructions
+## AIアシスタントへの指示
 
-When working on this repository:
+このリポジトリで作業する際の注意事項：
 
-1. **Read this file and README.md first** before making any changes
-2. **Keep `game.js` pure** — no `document`, `window`, or DOM references
-3. **Test logic changes** by running the test suite before committing
-4. **Commit often** with descriptive messages following this format:
-   - `feat: add valid move highlighting`
-   - `fix: correct diagonal flip detection`
-   - `refactor: extract direction vectors to constant`
-   - `test: add tests for edge board positions`
-   - `style: apply prettier formatting`
-5. **Do not break existing tests** — if you must change behavior, update tests to match and explain why
-6. **Prefer simple solutions** — Othello logic is well-defined; avoid over-engineering
-7. **Handle the "no valid moves" case** carefully — it is one of the most commonly missed edge cases
+1. **変更を加える前に、このファイルと README.md を最初に読むこと**
+2. **`game.js` を純粋に保つこと** — `document`、`window`、DOM参照を含めない
+3. **コミット前にテストスイートを実行してロジックの変更をテストすること**
+4. **こまめにコミットし**、以下の形式で説明的なメッセージを記述すること：
+   - `feat: 有効な手のハイライト表示を追加`
+   - `fix: 斜め方向のひっくり返し判定を修正`
+   - `refactor: 方向ベクトルを定数に抽出`
+   - `test: ボード端のポジションに関するテストを追加`
+   - `style: prettierフォーマットを適用`
+5. **既存のテストを壊さないこと** — 動作を変更する必要がある場合、テストも更新し、理由を説明すること
+6. **シンプルな解決策を優先すること** — オセロのロジックは明確に定義されているため、過度な設計を避ける
+7. **「有効な手がない」ケースを慎重に処理すること** — 最も見落とされやすいエッジケースの一つ
 
-## Common Pitfalls
+## よくある落とし穴
 
-- Forgetting to check all 8 directions when computing valid moves
-- Off-by-one errors in board boundary checks
-- Not skipping a player's turn when they have no valid moves (instead of ending the game)
-- Mutating board state directly instead of working on a copy (important for AI look-ahead)
-- Mixing display logic into game logic functions
+- 有効な手を計算する際に8方向すべてをチェックし忘れる
+- ボードの境界チェックでのオフバイワン（1つずれ）エラー
+- プレイヤーに有効な手がない場合にターンをスキップせず、ゲームを終了してしまう
+- コピーではなく盤面の状態を直接変更してしまう（AIの先読みに重要）
+- ゲームロジック関数に表示ロジックを混在させる
 
-## Git Workflow
+## Git ワークフロー
 
-- Branch naming: `claude/<description>-<session-id>`
-- All changes should be committed to the appropriate feature branch
-- Write clear commit messages describing *what* changed and *why*
-- Push with `git push -u origin <branch-name>`
+- ブランチ命名規則: `claude/<説明>-<セッションID>`
+- すべての変更は適切なフィーチャーブランチにコミットすること
+- *何を*変更し、*なぜ*変更したかを説明する明確なコミットメッセージを記述すること
+- プッシュは `git push -u origin <ブランチ名>` を使用すること
