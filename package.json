@@ -1,0 +1,11 @@
+{
+  "name": "othello",
+  "version": "1.0.0",
+  "description": "Othello (Reversi) web browser game",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "echo \"No tests configured yet\" && exit 0"
+  },
+  "license": "MIT"
+}
